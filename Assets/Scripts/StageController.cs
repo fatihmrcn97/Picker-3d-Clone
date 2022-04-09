@@ -26,7 +26,7 @@ public class StageController : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Player") && gameObject.tag== "FirstStage")
         {
-            LevelController.instance.gameActive = false;
+            LevelSystem.instance.gameActive = false;
             StartCoroutine(WaitForBoxes());
         }
         
@@ -37,8 +37,8 @@ public class StageController : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Player") && gameObject.tag == "FirstStage")
         {
-            // Elevator up
-            Debug.Log(objClass.boxCount);
+          
+            // Elevator up 
             if (objClass.boxCount >= objClass.MinCount)
             {
                 if (oneTimeWork)
@@ -46,7 +46,8 @@ public class StageController : MonoBehaviour
                     oneTimeWork = false;
                     if (isLastStep)
                     {
-                        LevelController.instance.FinishGame();
+                        gameObject.tag = "Untagged";
+                        LevelSystem.instance.FinishGame();
                         NextLevelGo();
                         stageImage.color = Color.green;
                     }
@@ -61,7 +62,8 @@ public class StageController : MonoBehaviour
             } 
             else if (waitForCollectables && objClass.boxCount < objClass.MinCount)
             {
-                LevelController.instance.GameOver();
+                LevelSystem.instance.GameOver();
+                gameObject.tag = "Untagged";
             }
 
         }
@@ -74,7 +76,7 @@ public class StageController : MonoBehaviour
         RightDoor.transform.DOLocalMove(new Vector3(0.915905f,- 2.53f, -6.39f), 2f);
 
         yield return new WaitForSeconds(3f);
-        LevelController.instance.gameActive = true;
+        LevelSystem.instance.gameActive = true;
         objClass.boxCount = 0;
     }
     private void NextLevelGo()

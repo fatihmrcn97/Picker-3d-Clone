@@ -7,14 +7,11 @@ public class PlayerController : MonoBehaviour
     public static PlayerController instance;
 
     [SerializeField] private float zSpeed;
-    private float _currentRunningSpeed=0f; 
+    [SerializeField] private float _currentRunningSpeed=0f; 
     [SerializeField] private float limit_Z;
     public Vector3 offSet;
 
-    public float runningSpeed = 4f;
   
-
-
      
     public Rigidbody rb;
 
@@ -27,7 +24,11 @@ public class PlayerController : MonoBehaviour
     }
     public void SetSpeed(float val)
     {
-        _currentRunningSpeed = val; 
+        _currentRunningSpeed+= val; 
+    }
+    public float getSpeed()
+    {
+        return _currentRunningSpeed;
     }
 
     private void Start()
@@ -37,7 +38,7 @@ public class PlayerController : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (LevelController.instance==null || !LevelController.instance.gameActive)
+        if (LevelSystem.instance==null || !LevelSystem.instance.gameActive)
             return;
 
         float newZ = 0;
